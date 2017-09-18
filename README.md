@@ -1,4 +1,4 @@
-##Udacity P4 Line Detection
+## Udacity P4 Line Detection
 
 ---
 
@@ -26,9 +26,9 @@ The goals / steps of this project are the following:
 
 ### [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 ---
-###Camera Calibration
+### Camera Calibration
 
-####1. Since the camera calibration is run only once, a lot of optimization can be run on this routine, specially `cornerSubPix`, which improves the chessboard corners found. Using `cornerSubPix` requires a criteria, more info can be read [here](http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_ml/py_kmeans/py_kmeans_opencv/py_kmeans_opencv.html).
+#### 1. Since the camera calibration is run only once, a lot of optimization can be run on this routine, specially `cornerSubPix`, which improves the chessboard corners found. Using `cornerSubPix` requires a criteria, more info can be read [here](http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_ml/py_kmeans/py_kmeans_opencv/py_kmeans_opencv.html).
 
 After we have the criteria and both the structures needed to store the points Glob is used to load the images easily and run the `findChessboardCorners` routine. The camera calibration function is the following:
 
@@ -68,14 +68,14 @@ That returns `mtx` and the `dist`, both needed to have an undistorted image, for
 
 That has been greatly corrected and modified.
 
-###Pipeline (single images)
+### Pipeline (single images)
 
-####1. Correcting image distortion.
+#### 1. Correcting image distortion.
 
 Using the parameters calculated above, the undistorted image of the road pictures shows:
 ![alt text][image12]
 
-####2. Thresholding
+#### 2. Thresholding
 Most of the thresholding functions were provided during the module, some minor changes added, the following functions are used for thresholding:
 ```python
 def abs_sobel_threshold(image, orient='x', sobel_kernel=3, thresh=(0, 255)):
@@ -136,13 +136,13 @@ Our generated Region of interest will be:
 
 ![alt text][image2]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
 
-####5. Curvature
+#### 5. Curvature
 From the formula provided [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php) the function `get_curvature` is defined, to return the curvature given our polynomial:
 ```python
 def get_curvature(polynomial,y):
@@ -151,7 +151,7 @@ def get_curvature(polynomial,y):
     return (1+(2*A*y+B)**2)**1.5/2/A
 ```
 
-####6. Image Pipeline
+#### 6. Image Pipeline
 The function `detect_lane_pipeline` is the main function for the line detection, here we take into consideration if we are on the first frame, or else if information from the past last frame should be used in order to speed up things. The sobel filters are applied on the ROI, the lines are detected with histograms peaks, then data is reused sometimes if it's other frame than the first one.
 
 Our output can be seen here:
@@ -167,8 +167,8 @@ Here's a [link to my video result](./project_video_final.mp4)
 
 ---
 
-###Discussion
+### Discussion
 This module was really clear, with my background on CV and also the lessons given, it was fairly easy to reach a solution, but this solution shows it's limitations, specially during sharp turns, or abrupt changes in the lanes, other conditions like more shadows, ice, fog, or a extremely bright day have not being taken into account, also this is only tested with images taken at day, not at night, and more improvements should be performed.
 
-###Acknowledgments
+### Acknowledgments
 To the Udacity Slack Channel, for all the help and ideas.
